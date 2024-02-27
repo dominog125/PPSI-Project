@@ -1,1 +1,0 @@
-print("Git działa :D")
