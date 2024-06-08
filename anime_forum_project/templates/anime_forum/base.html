@@ -1,0 +1,139 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Forum</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static   'styles1.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>{% trans "ANIME" %}</h1>
+            </div>
+
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="{% url 'category_list' %}">{% trans "Home" %}</a></li>
+                    <li><a href="{% url 'all_categories' %}">{% trans "Forums" %}</a></li>
+                    <li><a href="#">{% trans "Reviews" %}</a></li>
+
+                     {% if user.is_authenticated %}
+                        <li>
+                            <form id="logout-form" method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link" style="padding: 0; border: none; background: none;">{% trans "Logout" %}</button>
+                            </form>
+                        </li>
+                         <li><form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ request.path }}">
+                            <label>
+                                <select name="language" onchange="this.form.submit()">
+                                    {% get_current_language as LANGUAGE_CODE %}
+                                    {% get_available_languages as LANGUAGES %}
+                                    {% get_language_info_list for LANGUAGES as languages %}
+                                    {% for language in languages %}
+                                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                            {{ language.name_local }}
+                                        </option>
+                                 {% endfor %}
+                                </select>
+                            </label>
+                        </form>
+                    </li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">{% trans "Sign In" %}</a></li>
+                         <li><a href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
+
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+       <section class="hero">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6 hero-text">
+                        <h2>Anime Forum Community</h2>
+                    </div>
+                    <div class="col-md-6 hero-image">
+                        <img src="{% static 'hero.png' %}" alt="Anime Character" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container main-content">
+            <section class="forums">
+
+                  {% block content %}
+                  {% endblock %}
+
+            </section>
+
+            <aside class="sidebar">
+                <div id="weather" class="weather-widget">
+                <!-- Weather info will be injected here by JavaScript -->
+            </div>
+            </aside>
+        </div>
+        <div class="container main-content">
+
+        <section class="news">
+                <h3>News</h3>
+                <div class="news-list">
+                    <div class="news-item">
+                        <div class="news-item-header">
+                            <h4>News</h4>
+                            <span class="news-item-icon">!</span>
+                        </div>
+                        <img src="{% static   'news1.jpg' %}" alt="News Image">
+                        <p>Latest news information goes here.</p>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-item-header">
+                            <h4>News</h4>
+                            <span class="news-item-icon">!</span>
+                        </div>
+                        <img src="{% static   'news1.jpg' %}" alt="News Image">
+                        <p>Latest news information goes here.</p>
+                    </div>
+                    <div class="news-item">
+                        <div class="news-item-header">
+                            <h4>News</h4>
+                            <span class="news-item-icon">!</span>
+                        </div>
+                        <img src="{% static   'news1.jpg' %}" alt="News Image">
+                        <p>Latest news information goes here.</p>
+                    </div>
+                </div>
+        </section>
+
+    </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; {% trans "Anime Forum" %}. {% trans "All rights reserved." %}</p>
+        </div>
+    </footer>
+
+   <script src="{% static 'scripts.js' %}"></script>
+<script src="{% static 'WeatherApi.js' %}"></script>
+
+</body>
+</html>

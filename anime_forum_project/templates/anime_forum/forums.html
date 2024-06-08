@@ -1,0 +1,22 @@
+{% extends 'anime_forum/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>All Forums</h2>
+    <div class="row row-cols-auto">
+        {% for category in categories %}
+        <div class="col-auto" style="padding: 1%">
+            <div class="card forum-itembs ">
+                <div class="card-body forum-itembs">
+                    <h5 class="card-title forum-itembs">{{ category.category_name }}</h5>
+                    <p class="card-text forum-itembs">{{ category.description }}</p>
+                    <a href="{% url 'thread_list' category.id %}" class="btn btn-secondary btn-sm forum-itembs">View Threads</a>
+                <br>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

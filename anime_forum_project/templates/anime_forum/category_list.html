@@ -1,0 +1,17 @@
+{% extends 'anime_forum/base.html' %}
+
+{% block content %}
+<section class="forums">
+    <h3>Forums</h3>
+    <div class="forum-list">
+        {% for category in categories %}
+            <div class="forum-item">
+                <div class="forum-item-header">
+                    <h4><a href="{% url 'thread_list' category.id %}">{{ category.category_name }}</a></h4>
+                </div>
+                <p>{{ category.description|truncatewords:20 }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
