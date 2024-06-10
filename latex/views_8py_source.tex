@@ -1,0 +1,185 @@
+\doxysection{views.\+py}
+\hypertarget{views_8py_source}{}\label{views_8py_source}\index{anime\_forum/views.py@{anime\_forum/views.py}}
+\mbox{\hyperlink{views_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00001}\mbox{\hyperlink{namespaceanime__forum_1_1views}{00001}}\ \textcolor{keyword}{from}\ django.shortcuts\ \textcolor{keyword}{import}\ render,\ redirect,\ get\_object\_or\_404}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00002}00002\ \textcolor{keyword}{from}\ .models\ \textcolor{keyword}{import}\ Category,\ Thread,\ Post,\ LogEntry}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00003}00003\ \textcolor{keyword}{from}\ .forms\ \textcolor{keyword}{import}\ ThreadForm,\ PostForm,\ UserRegisterForm,\ UserLoginForm}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00004}00004\ \textcolor{keyword}{from}\ django.contrib.auth\ \textcolor{keyword}{import}\ login,\ authenticate,logout}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00005}00005\ \textcolor{keyword}{from}\ django.contrib.auth.forms\ \textcolor{keyword}{import}\ UserCreationForm}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00006}00006\ \textcolor{keyword}{from}\ django.contrib.auth.decorators\ \textcolor{keyword}{import}\ login\_required}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00007}00007\ \textcolor{keyword}{from}\ django.core.mail\ \textcolor{keyword}{import}\ send\_mail}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00008}00008\ \textcolor{keyword}{from}\ django.conf\ \textcolor{keyword}{import}\ settings}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00009}00009\ \textcolor{keyword}{from}\ django.utils.translation\ \textcolor{keyword}{import}\ gettext\ \textcolor{keyword}{as}\ \_}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00010}00010\ \textcolor{keyword}{from}\ django.utils.translation\ \textcolor{keyword}{import}\ activate}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00011}00011\ \textcolor{keyword}{from}\ django.conf\ \textcolor{keyword}{import}\ settings}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00012}00012\ \textcolor{keyword}{from}\ django.core.cache\ \textcolor{keyword}{import}\ cache}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00013}00013\ \textcolor{keyword}{from}\ .serializers\ \textcolor{keyword}{import}\ ThreadSerializer}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00014}00014\ \textcolor{keyword}{from}\ rest\_framework\ \textcolor{keyword}{import}\ generics}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00016}\mbox{\hyperlink{classanime__forum_1_1views_1_1_thread_list_a_p_i_view}{00016}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1views_1_1_thread_list_a_p_i_view}{ThreadListAPIView}}(generics.ListAPIView):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00017}\mbox{\hyperlink{classanime__forum_1_1views_1_1_thread_list_a_p_i_view_a08971fb85b1c8278657cba308ba728db}{00017}}\ \ \ \ \ queryset\ =\ Thread.objects.all()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00018}\mbox{\hyperlink{classanime__forum_1_1views_1_1_thread_list_a_p_i_view_ad27f3121a0906430dbb03e2f14d4c9fa}{00018}}\ \ \ \ \ serializer\_class\ =\ ThreadSerializer}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00020}\mbox{\hyperlink{classanime__forum_1_1views_1_1_thread_detail_a_p_i_view}{00020}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1views_1_1_thread_detail_a_p_i_view}{ThreadDetailAPIView}}(generics.RetrieveAPIView):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00021}\mbox{\hyperlink{classanime__forum_1_1views_1_1_thread_detail_a_p_i_view_a849e35390aba7a6d809620da81a9e8f4}{00021}}\ \ \ \ \ queryset\ =\ Thread.objects.all()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00022}\mbox{\hyperlink{classanime__forum_1_1views_1_1_thread_detail_a_p_i_view_a55eaa6f4c0fb857a58b7cfaedd3dbe60}{00022}}\ \ \ \ \ serializer\_class\ =\ ThreadSerializer}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00025}\mbox{\hyperlink{namespaceanime__forum_1_1views_ab90cefde65e8781ae12cb3a7b6ccefd6}{00025}}\ CACHE\_TTL\ =\ 60\ *\ 15\ \ \textcolor{comment}{\#\ 15\ minutes}}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00029}\mbox{\hyperlink{namespaceanime__forum_1_1views_a2c3caab7038a2781d12a0d2d0b181555}{00029}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_a2c3caab7038a2781d12a0d2d0b181555}{set\_language}}(request):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{if}\ request.method\ ==\ \textcolor{stringliteral}{'POST'}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00031}00031\ \ \ \ \ \ \ \ \ language\ =\ request.POST.get(\textcolor{stringliteral}{'language'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00032}00032\ \ \ \ \ \ \ \ \ next\_url\ =\ request.POST.get(\textcolor{stringliteral}{'next'},\ \textcolor{stringliteral}{'/'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00033}00033\ \ \ \ \ \ \ \ \ response\ =\ redirect(next\_url)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00034}00034\ \ \ \ \ \ \ \ \ response.set\_cookie(settings.LANGUAGE\_COOKIE\_NAME,\ language)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00035}00035\ \ \ \ \ \ \ \ \ activate(language)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00036}00036\ \ \ \ \ \ \ \ \ LogEntry.objects.create(user=request.user,\ action=\textcolor{stringliteral}{'CHANGE\_LANGUAGE'},\ details=f\textcolor{stringliteral}{"{}Language\ changed\ to\ \{language\}"{}})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ response}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00038}00038\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(\textcolor{stringliteral}{'/'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00041}\mbox{\hyperlink{namespaceanime__forum_1_1views_ab19644d4ccc87232fdd729aa19f2e74f}{00041}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_ab19644d4ccc87232fdd729aa19f2e74f}{category\_list}}(request):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00042}00042\ \ \ \ \ categories\ =\ cache.get(\textcolor{stringliteral}{'categories'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ categories:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00044}00044\ \ \ \ \ \ \ \ \ categories\ =\ Category.objects.all()[:3]}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00045}00045\ \ \ \ \ \ \ \ \ cache.set(\textcolor{stringliteral}{'categories'},\ categories,\ CACHE\_TTL)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{return}\ render(request,\ \textcolor{stringliteral}{'anime\_forum/category\_list.html'},\ \{\textcolor{stringliteral}{'categories'}:\ categories\})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00049}\mbox{\hyperlink{namespaceanime__forum_1_1views_a6be3ddfee2aa28e78e640ce65c9994a1}{00049}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_a6be3ddfee2aa28e78e640ce65c9994a1}{all\_categories}}(request):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00050}00050\ \ \ \ \ categoriesall\ =\ cache.get(\textcolor{stringliteral}{'all\_categories'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00051}00051\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ categoriesall:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00052}00052\ \ \ \ \ \ \ \ \ categoriesall\ =\ Category.objects.all()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00053}00053\ \ \ \ \ \ \ \ \ cache.set(\textcolor{stringliteral}{'all\_categories'},\ categoriesall,\ CACHE\_TTL)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{return}\ render(request,\ \textcolor{stringliteral}{'anime\_forum/forums.html'},\ \{\textcolor{stringliteral}{'categories'}:\ categoriesall\})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00057}\mbox{\hyperlink{namespaceanime__forum_1_1views_a13e771d8131d6685f33ca140c8fd896e}{00057}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_a13e771d8131d6685f33ca140c8fd896e}{thread\_list}}(request,\ category\_id):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00058}00058\ \ \ \ \ category\ =\ get\_object\_or\_404(Category,\ pk=category\_id)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00059}00059\ \ \ \ \ threads\ =\ cache.get(f\textcolor{stringliteral}{'threads\_\{category\_id\}'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keywordflow}{not}\ threads:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00061}00061\ \ \ \ \ \ \ \ \ threads\ =\ Thread.objects.filter(category=category)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00062}00062\ \ \ \ \ \ \ \ \ cache.set(f\textcolor{stringliteral}{'threads\_\{category\_id\}'},\ threads,\ CACHE\_TTL)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{if}\ request.method\ ==\ \textcolor{stringliteral}{'POST'}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00064}00064\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_thread_form}{ThreadForm}}(request.POST)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00065}00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ form.is\_valid():}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ thread\ =\ form.save(commit=\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ thread.user\ =\ request.user}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ thread.category\ =\ category}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ thread.save()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ cache.delete(f\textcolor{stringliteral}{'threads\_\{category\_id\}'})\ \ \textcolor{comment}{\#\ Clear\ cache\ when\ a\ new\ thread\ is\ created}}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(\textcolor{stringliteral}{'thread\_list'},\ category\_id=category.id)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00073}00073\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_thread_form}{ThreadForm}}()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00074}00074\ \ \ \ \ \textcolor{keywordflow}{return}\ render(request,\ \textcolor{stringliteral}{'anime\_forum/thread\_list.html'},\ \{\textcolor{stringliteral}{'category'}:\ category,\ \textcolor{stringliteral}{'threads'}:\ threads,\ \textcolor{stringliteral}{'form'}:\ form\})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00077}\mbox{\hyperlink{namespaceanime__forum_1_1views_a1fa08c3611f755f767a8cc032fc4a9da}{00077}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_a1fa08c3611f755f767a8cc032fc4a9da}{post\_list}}(request,\ thread\_id):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00078}00078\ \ \ \ \ thread\ =\ get\_object\_or\_404(Thread,\ pk=thread\_id)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00079}00079\ \ \ \ \ posts\ =\ Post.objects.filter(thread=thread)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00080}00080\ \ \ \ \ \textcolor{keywordflow}{if}\ request.method\ ==\ \textcolor{stringliteral}{'POST'}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00081}00081\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_post_form}{PostForm}}(request.POST)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00082}00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ form.is\_valid():}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ post\ =\ form.save(commit=\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ post.user\ =\ request.user}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ post.thread\ =\ thread}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ post.save()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ LogEntry.objects.create(user=request.user,\ action=\textcolor{stringliteral}{'CREATE\_POST'},details=f\textcolor{stringliteral}{"{}Post\ created\ in\ thread\ '\{thread.title\}'"{}})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(\textcolor{stringliteral}{'post\_list'},\ thread\_id=thread.id)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00089}00089\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00090}00090\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_post_form}{PostForm}}()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00091}00091\ \ \ \ \ \textcolor{keywordflow}{return}\ render(request,\ \textcolor{stringliteral}{'anime\_forum/post\_list.html'},\ \{\textcolor{stringliteral}{'thread'}:\ thread,\ \textcolor{stringliteral}{'posts'}:\ posts,\ \textcolor{stringliteral}{'form'}:\ form\})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00094}\mbox{\hyperlink{namespaceanime__forum_1_1views_a0aeb4d5e77a3e9fa401028047bbe7204}{00094}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_a0aeb4d5e77a3e9fa401028047bbe7204}{create\_thread}}(request):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00095}00095\ \ \ \ \ \textcolor{keywordflow}{if}\ request.method\ ==\ \textcolor{stringliteral}{'POST'}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00096}00096\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_thread_form}{ThreadForm}}(request.POST)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ form.is\_valid():}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ thread\ =\ form.save(commit=\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ thread.user\ =\ request.user}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ thread.save()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(\textcolor{stringliteral}{'thread\_list'},\ category\_id=thread.category.id)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00102}00102\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00103}00103\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_thread_form}{ThreadForm}}()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00104}00104\ \ \ \ \ \textcolor{keywordflow}{return}\ render(request,\ \textcolor{stringliteral}{'anime\_forum/create\_thread.html'},\ \{\textcolor{stringliteral}{'form'}:\ form\})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00106}00106\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00107}\mbox{\hyperlink{namespaceanime__forum_1_1views_a3e7232aa0e76d220b64b809596deb27a}{00107}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_a3e7232aa0e76d220b64b809596deb27a}{create\_post}}(request,\ thread\_id):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00108}00108\ \ \ \ \ thread\ =\ get\_object\_or\_404(Thread,\ pk=thread\_id)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00109}00109\ \ \ \ \ \textcolor{keywordflow}{if}\ request.method\ ==\ \textcolor{stringliteral}{'POST'}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00110}00110\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_post_form}{PostForm}}(request.POST)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00111}00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ form.is\_valid():}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ post\ =\ form.save(commit=\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ post.user\ =\ request.user}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ post.thread\ =\ thread}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ post.save()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(\textcolor{stringliteral}{'post\_list'},\ thread\_id=thread.id)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00117}00117\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00118}00118\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_post_form}{PostForm}}()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00119}00119\ \ \ \ \ \textcolor{keywordflow}{return}\ render(request,\ \textcolor{stringliteral}{'anime\_forum/create\_post.html'},\ \{\textcolor{stringliteral}{'form'}:\ form,\ \textcolor{stringliteral}{'thread'}:\ thread\})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00122}\mbox{\hyperlink{namespaceanime__forum_1_1views_af440143487b561f2c192f23de716923d}{00122}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_af440143487b561f2c192f23de716923d}{register}}(request):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00123}00123\ \ \ \ \ \textcolor{keywordflow}{if}\ request.method\ ==\ \textcolor{stringliteral}{'POST'}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00124}00124\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_user_register_form}{UserRegisterForm}}(request.POST)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00125}00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ form.is\_valid():}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ user\ =\ form.save()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceanime__forum_1_1views_a5c777376973fb47654ff3948ac41ee58}{send\_welcome\_email}}(user.email)\ \ \textcolor{comment}{\#\ Send\ welcome\ email}}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ login(request,\ user)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ LogEntry.objects.create(user=user,\ action=\textcolor{stringliteral}{'LOGIN'},\ details=\textcolor{stringliteral}{'User\ registered\ and\ logged\ in'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(\textcolor{stringliteral}{'category\_list'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00131}00131\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00132}00132\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_user_register_form}{UserRegisterForm}}()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00133}00133\ \ \ \ \ \textcolor{keywordflow}{return}\ render(request,\ \textcolor{stringliteral}{'anime\_forum/register.html'},\ \{\textcolor{stringliteral}{'form'}:\ form\})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00136}\mbox{\hyperlink{namespaceanime__forum_1_1views_a3f2774ea6e902052bc03bcfde09d8732}{00136}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_a3f2774ea6e902052bc03bcfde09d8732}{user\_login}}(request):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00137}00137\ \ \ \ \ \textcolor{keywordflow}{if}\ request.method\ ==\ \textcolor{stringliteral}{'POST'}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00138}00138\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_user_login_form}{UserLoginForm}}(request,\ data=request.POST)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00139}00139\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ form.is\_valid():}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ username\ =\ form.cleaned\_data.get(\textcolor{stringliteral}{'username'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ password\ =\ form.cleaned\_data.get(\textcolor{stringliteral}{'password'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ user\ =\ authenticate(username=username,\ password=password)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ user\ \textcolor{keywordflow}{is}\ \textcolor{keywordflow}{not}\ \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ login(request,\ user)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LogEntry.objects.create(user=user,\ action=\textcolor{stringliteral}{'LOGIN'},\ details=\textcolor{stringliteral}{'User\ logged\ in'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(\textcolor{stringliteral}{'category\_list'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00147}00147\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00148}00148\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_user_login_form}{UserLoginForm}}()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00149}00149\ \ \ \ \ \textcolor{keywordflow}{return}\ render(request,\ \textcolor{stringliteral}{'anime\_forum/login.html'},\ \{\textcolor{stringliteral}{'form'}:\ form\})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00152}00152\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00153}\mbox{\hyperlink{namespaceanime__forum_1_1views_a9e98c402fb39ae99f2b512d595a5a28b}{00153}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_a9e98c402fb39ae99f2b512d595a5a28b}{edit\_post}}(request,\ post\_id):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00154}00154\ \ \ \ \ post\ =\ get\_object\_or\_404(Post,\ id=post\_id,\ user=request.user)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00155}00155\ \ \ \ \ \textcolor{keywordflow}{if}\ request.method\ ==\ \textcolor{stringliteral}{'POST'}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00156}00156\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_post_form}{PostForm}}(request.POST,\ instance=post)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00157}00157\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ form.is\_valid():}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ form.save()}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ LogEntry.objects.create(user=request.user,\ action=\textcolor{stringliteral}{'CREATE\_POST'},\ details=f\textcolor{stringliteral}{"{}Post\ edited\ in\ thread\ '\{post.thread.title\}'"{}})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(\textcolor{stringliteral}{'post\_list'},\ thread\_id=post.thread.id)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00161}00161\ \ \ \ \ \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00162}00162\ \ \ \ \ \ \ \ \ form\ =\ \mbox{\hyperlink{classanime__forum_1_1forms_1_1_post_form}{PostForm}}(instance=post)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00163}00163\ \ \ \ \ \textcolor{keywordflow}{return}\ render(request,\ \textcolor{stringliteral}{'anime\_forum/edit\_post.html'},\ \{\textcolor{stringliteral}{'form'}:\ form,\ \textcolor{stringliteral}{'post'}:\ post\})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00166}00166\ \textcolor{preprocessor}{@login\_required}}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00167}\mbox{\hyperlink{namespaceanime__forum_1_1views_ace99a16dc513d32f4ec2b16fa22dbc66}{00167}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_ace99a16dc513d32f4ec2b16fa22dbc66}{logout\_view}}(request):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00168}00168\ \ \ \ \ LogEntry.objects.create(user=request.user,\ action=\textcolor{stringliteral}{'LOGOUT'},\ details=\textcolor{stringliteral}{'User\ logged\ out'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00169}00169\ \ \ \ \ logout(request)}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00170}00170\ \ \ \ \ \textcolor{keywordflow}{return}\ redirect(\textcolor{stringliteral}{'category\_list'})}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00171}00171\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00172}00172\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00173}\mbox{\hyperlink{namespaceanime__forum_1_1views_a5c777376973fb47654ff3948ac41ee58}{00173}}\ \textcolor{keyword}{def\ }\mbox{\hyperlink{namespaceanime__forum_1_1views_a5c777376973fb47654ff3948ac41ee58}{send\_welcome\_email}}(user\_email):}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00174}00174\ \ \ \ \ subject\ =\ \textcolor{stringliteral}{'Welcome\ to\ Anime\ Forum'}}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00175}00175\ \ \ \ \ message\ =\ \textcolor{stringliteral}{'Thank\ you\ for\ registering\ at\ Anime\ Forum!'}}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00176}00176\ \ \ \ \ email\_from\ =\ settings.EMAIL\_HOST\_USER}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00177}00177\ \ \ \ \ recipient\_list\ =\ [user\_email]}
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{views_8py_source_l00179}00179\ \ \ \ \ send\_mail(subject,\ message,\ email\_from,\ recipient\_list)}
+
+\end{DoxyCode}
