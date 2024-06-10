@@ -1,0 +1,22 @@
+\doxysection{middleware.\+py}
+\hypertarget{middleware_8py_source}{}\label{middleware_8py_source}\index{anime\_forum/middleware.py@{anime\_forum/middleware.py}}
+\mbox{\hyperlink{middleware_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00001}\mbox{\hyperlink{namespaceanime__forum_1_1middleware}{00001}}\ \textcolor{keyword}{from}\ django.utils.deprecation\ \textcolor{keyword}{import}\ MiddlewareMixin}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00002}00002\ \textcolor{keyword}{from}\ django.contrib.auth\ \textcolor{keyword}{import}\ get\_user\_model}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00003}00003\ \textcolor{keyword}{from}\ .models\ \textcolor{keyword}{import}\ LogEntry}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00005}\mbox{\hyperlink{namespaceanime__forum_1_1middleware_a6fda869fb7c7ce82f7d9c6f007739066}{00005}}\ User\ =\ get\_user\_model()}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00007}\mbox{\hyperlink{classanime__forum_1_1middleware_1_1_action_logging_middleware}{00007}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1middleware_1_1_action_logging_middleware}{ActionLoggingMiddleware}}(MiddlewareMixin):}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00008}\mbox{\hyperlink{classanime__forum_1_1middleware_1_1_action_logging_middleware_a794244fac8973e352b44348cacebce9a}{00008}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanime__forum_1_1middleware_1_1_action_logging_middleware_a794244fac8973e352b44348cacebce9a}{process\_request}}(self,\ request):}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00009}00009\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ request.user.is\_authenticated:}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00010}00010\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ request.path\ ==\ \textcolor{stringliteral}{'/login/'}\ \textcolor{keywordflow}{and}\ request.method\ ==\ \textcolor{stringliteral}{'POST'}:}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00011}00011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanime__forum_1_1middleware_1_1_action_logging_middleware_a6a93982126261e4c42823271d656af52}{log\_action}}(request.user,\ \textcolor{stringliteral}{'LOGIN'})}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{elif}\ request.path\ ==\ \textcolor{stringliteral}{'/logout/'}\ \textcolor{keywordflow}{and}\ request.method\ ==\ \textcolor{stringliteral}{'POST'}:}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00013}00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ self.\mbox{\hyperlink{classanime__forum_1_1middleware_1_1_action_logging_middleware_a6a93982126261e4c42823271d656af52}{log\_action}}(request.user,\ \textcolor{stringliteral}{'LOGOUT'})}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00015}\mbox{\hyperlink{classanime__forum_1_1middleware_1_1_action_logging_middleware_a6a93982126261e4c42823271d656af52}{00015}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanime__forum_1_1middleware_1_1_action_logging_middleware_a6a93982126261e4c42823271d656af52}{log\_action}}(self,\ user,\ action,\ details=''):}
+\DoxyCodeLine{\Hypertarget{middleware_8py_source_l00016}00016\ \ \ \ \ \ \ \ \ LogEntry.objects.create(user=user,\ action=action,\ details=details)}
+
+\end{DoxyCode}

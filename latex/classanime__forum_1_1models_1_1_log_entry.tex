@@ -1,0 +1,115 @@
+\doxysection{anime\+\_\+forum.\+models.\+Log\+Entry Class Reference}
+\hypertarget{classanime__forum_1_1models_1_1_log_entry}{}\label{classanime__forum_1_1models_1_1_log_entry}\index{anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}}
+Inheritance diagram for anime\+\_\+forum.\+models.\+Log\+Entry\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classanime__forum_1_1models_1_1_log_entry}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a92532202a42ddece98d371b05feb82b8}{\+\_\+\+\_\+str\+\_\+\+\_\+}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+list \mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a456e220255d42485429cc2fab660c7c0}{ACTION\+\_\+\+CHOICES}}
+\item 
+\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_aae042ea12419dc254502a535cbd0c69e}{user}} = models.\+Foreign\+Key(settings.\+AUTH\+\_\+\+USER\+\_\+\+MODEL, on\+\_\+delete=models.\+CASCADE, related\+\_\+name=\textquotesingle{}anime\+\_\+log\+\_\+entries\textquotesingle{})
+\item 
+\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_ab4890c0cdeebc0623b1fd7c98346c065}{action}} = models.\+Char\+Field(max\+\_\+length=50, choices=\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a456e220255d42485429cc2fab660c7c0}{ACTION\+\_\+\+CHOICES}})
+\item 
+\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a54087ecbb9ee7602390e48711f9590ff}{timestamp}} = models.\+Date\+Time\+Field(auto\+\_\+now\+\_\+add=True)
+\item 
+\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a75a111b95a5c3139e052ddc85b7646d5}{details}} = models.\+Text\+Field(blank=True, null=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00005}{5}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classanime__forum_1_1models_1_1_log_entry_a92532202a42ddece98d371b05feb82b8}\label{classanime__forum_1_1models_1_1_log_entry_a92532202a42ddece98d371b05feb82b8} 
+\index{anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}!\_\_str\_\_@{\_\_str\_\_}}
+\index{\_\_str\_\_@{\_\_str\_\_}!anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}}
+\doxysubsubsection{\texorpdfstring{\_\_str\_\_()}{\_\_str\_\_()}}
+{\footnotesize\ttfamily anime\+\_\+forum.\+models.\+Log\+Entry.\+\_\+\+\_\+str\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00020}{20}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classanime__forum_1_1models_1_1_log_entry_ab4890c0cdeebc0623b1fd7c98346c065}\label{classanime__forum_1_1models_1_1_log_entry_ab4890c0cdeebc0623b1fd7c98346c065} 
+\index{anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}!action@{action}}
+\index{action@{action}!anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}}
+\doxysubsubsection{\texorpdfstring{action}{action}}
+{\footnotesize\ttfamily anime\+\_\+forum.\+models.\+Log\+Entry.\+action = models.\+Char\+Field(max\+\_\+length=50, choices=\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a456e220255d42485429cc2fab660c7c0}{ACTION\+\_\+\+CHOICES}})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00015}{15}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classanime__forum_1_1models_1_1_log_entry_a456e220255d42485429cc2fab660c7c0}\label{classanime__forum_1_1models_1_1_log_entry_a456e220255d42485429cc2fab660c7c0} 
+\index{anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}!ACTION\_CHOICES@{ACTION\_CHOICES}}
+\index{ACTION\_CHOICES@{ACTION\_CHOICES}!anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}}
+\doxysubsubsection{\texorpdfstring{ACTION\_CHOICES}{ACTION\_CHOICES}}
+{\footnotesize\ttfamily list anime\+\_\+forum.\+models.\+Log\+Entry.\+ACTION\+\_\+\+CHOICES\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ [}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'LOGIN'},\ \textcolor{stringliteral}{'Login'}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'LOGOUT'},\ \textcolor{stringliteral}{'Logout'}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'CREATE\_THREAD'},\ \textcolor{stringliteral}{'Create\ Thread'}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'CREATE\_POST'},\ \textcolor{stringliteral}{'Create\ Post'}),}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ ]}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00006}{6}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classanime__forum_1_1models_1_1_log_entry_a75a111b95a5c3139e052ddc85b7646d5}\label{classanime__forum_1_1models_1_1_log_entry_a75a111b95a5c3139e052ddc85b7646d5} 
+\index{anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}!details@{details}}
+\index{details@{details}!anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}}
+\doxysubsubsection{\texorpdfstring{details}{details}}
+{\footnotesize\ttfamily anime\+\_\+forum.\+models.\+Log\+Entry.\+details = models.\+Text\+Field(blank=True, null=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00017}{17}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classanime__forum_1_1models_1_1_log_entry_a54087ecbb9ee7602390e48711f9590ff}\label{classanime__forum_1_1models_1_1_log_entry_a54087ecbb9ee7602390e48711f9590ff} 
+\index{anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}!timestamp@{timestamp}}
+\index{timestamp@{timestamp}!anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}}
+\doxysubsubsection{\texorpdfstring{timestamp}{timestamp}}
+{\footnotesize\ttfamily anime\+\_\+forum.\+models.\+Log\+Entry.\+timestamp = models.\+Date\+Time\+Field(auto\+\_\+now\+\_\+add=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00016}{16}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classanime__forum_1_1models_1_1_log_entry_aae042ea12419dc254502a535cbd0c69e}\label{classanime__forum_1_1models_1_1_log_entry_aae042ea12419dc254502a535cbd0c69e} 
+\index{anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}!user@{user}}
+\index{user@{user}!anime\_forum.models.LogEntry@{anime\_forum.models.LogEntry}}
+\doxysubsubsection{\texorpdfstring{user}{user}}
+{\footnotesize\ttfamily anime\+\_\+forum.\+models.\+Log\+Entry.\+user = models.\+Foreign\+Key(settings.\+AUTH\+\_\+\+USER\+\_\+\+MODEL, on\+\_\+delete=models.\+CASCADE, related\+\_\+name=\textquotesingle{}anime\+\_\+log\+\_\+entries\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00014}{14}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+anime\+\_\+forum/\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

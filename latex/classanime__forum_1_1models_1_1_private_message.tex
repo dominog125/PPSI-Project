@@ -1,0 +1,74 @@
+\doxysection{anime\+\_\+forum.\+models.\+Private\+Message Class Reference}
+\hypertarget{classanime__forum_1_1models_1_1_private_message}{}\label{classanime__forum_1_1models_1_1_private_message}\index{anime\_forum.models.PrivateMessage@{anime\_forum.models.PrivateMessage}}
+Inheritance diagram for anime\+\_\+forum.\+models.\+Private\+Message\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classanime__forum_1_1models_1_1_private_message}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classanime__forum_1_1models_1_1_private_message_a1bd4e6b1e186e82525c53f595973ac12}{sender}} = models.\+Foreign\+Key(\mbox{\hyperlink{classanime__forum_1_1models_1_1_user}{User}}, related\+\_\+name=\textquotesingle{}sent\+\_\+messages\textquotesingle{}, on\+\_\+delete=models.\+CASCADE)
+\item 
+\mbox{\hyperlink{classanime__forum_1_1models_1_1_private_message_ad086f35df85228aa5c93aade9dcc5c0d}{receiver}} = models.\+Foreign\+Key(\mbox{\hyperlink{classanime__forum_1_1models_1_1_user}{User}}, related\+\_\+name=\textquotesingle{}received\+\_\+messages\textquotesingle{}, on\+\_\+delete=models.\+CASCADE)
+\item 
+\mbox{\hyperlink{classanime__forum_1_1models_1_1_private_message_a60a0a43d9bf51f4250a61bac0beacd68}{content}} = models.\+Text\+Field()
+\item 
+\mbox{\hyperlink{classanime__forum_1_1models_1_1_private_message_a5824eb208197d2a45cdc0a6883ee8e08}{sent\+\_\+at}} = models.\+Date\+Time\+Field(auto\+\_\+now\+\_\+add=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00061}{61}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classanime__forum_1_1models_1_1_private_message_a60a0a43d9bf51f4250a61bac0beacd68}\label{classanime__forum_1_1models_1_1_private_message_a60a0a43d9bf51f4250a61bac0beacd68} 
+\index{anime\_forum.models.PrivateMessage@{anime\_forum.models.PrivateMessage}!content@{content}}
+\index{content@{content}!anime\_forum.models.PrivateMessage@{anime\_forum.models.PrivateMessage}}
+\doxysubsubsection{\texorpdfstring{content}{content}}
+{\footnotesize\ttfamily anime\+\_\+forum.\+models.\+Private\+Message.\+content = models.\+Text\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00064}{64}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classanime__forum_1_1models_1_1_private_message_ad086f35df85228aa5c93aade9dcc5c0d}\label{classanime__forum_1_1models_1_1_private_message_ad086f35df85228aa5c93aade9dcc5c0d} 
+\index{anime\_forum.models.PrivateMessage@{anime\_forum.models.PrivateMessage}!receiver@{receiver}}
+\index{receiver@{receiver}!anime\_forum.models.PrivateMessage@{anime\_forum.models.PrivateMessage}}
+\doxysubsubsection{\texorpdfstring{receiver}{receiver}}
+{\footnotesize\ttfamily anime\+\_\+forum.\+models.\+Private\+Message.\+receiver = models.\+Foreign\+Key(\mbox{\hyperlink{classanime__forum_1_1models_1_1_user}{User}}, related\+\_\+name=\textquotesingle{}received\+\_\+messages\textquotesingle{}, on\+\_\+delete=models.\+CASCADE)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00063}{63}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classanime__forum_1_1models_1_1_private_message_a1bd4e6b1e186e82525c53f595973ac12}\label{classanime__forum_1_1models_1_1_private_message_a1bd4e6b1e186e82525c53f595973ac12} 
+\index{anime\_forum.models.PrivateMessage@{anime\_forum.models.PrivateMessage}!sender@{sender}}
+\index{sender@{sender}!anime\_forum.models.PrivateMessage@{anime\_forum.models.PrivateMessage}}
+\doxysubsubsection{\texorpdfstring{sender}{sender}}
+{\footnotesize\ttfamily anime\+\_\+forum.\+models.\+Private\+Message.\+sender = models.\+Foreign\+Key(\mbox{\hyperlink{classanime__forum_1_1models_1_1_user}{User}}, related\+\_\+name=\textquotesingle{}sent\+\_\+messages\textquotesingle{}, on\+\_\+delete=models.\+CASCADE)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00062}{62}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+\Hypertarget{classanime__forum_1_1models_1_1_private_message_a5824eb208197d2a45cdc0a6883ee8e08}\label{classanime__forum_1_1models_1_1_private_message_a5824eb208197d2a45cdc0a6883ee8e08} 
+\index{anime\_forum.models.PrivateMessage@{anime\_forum.models.PrivateMessage}!sent\_at@{sent\_at}}
+\index{sent\_at@{sent\_at}!anime\_forum.models.PrivateMessage@{anime\_forum.models.PrivateMessage}}
+\doxysubsubsection{\texorpdfstring{sent\_at}{sent\_at}}
+{\footnotesize\ttfamily anime\+\_\+forum.\+models.\+Private\+Message.\+sent\+\_\+at = models.\+Date\+Time\+Field(auto\+\_\+now\+\_\+add=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{models_8py_source_l00065}{65}} of file \mbox{\hyperlink{models_8py_source}{models.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+anime\+\_\+forum/\mbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

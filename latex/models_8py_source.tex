@@ -1,0 +1,78 @@
+\doxysection{models.\+py}
+\hypertarget{models_8py_source}{}\label{models_8py_source}\index{anime\_forum/models.py@{anime\_forum/models.py}}
+\mbox{\hyperlink{models_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00001}\mbox{\hyperlink{namespaceanime__forum_1_1models}{00001}}\ \textcolor{keyword}{from}\ django.db\ \textcolor{keyword}{import}\ models}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00002}00002\ \textcolor{keyword}{from}\ django.contrib.auth.models\ \textcolor{keyword}{import}\ AbstractUser}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00003}00003\ \textcolor{keyword}{from}\ django.conf\ \textcolor{keyword}{import}\ settings}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00005}\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry}{00005}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry}{LogEntry}}(models.Model):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00006}\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a456e220255d42485429cc2fab660c7c0}{00006}}\ \ \ \ \ ACTION\_CHOICES\ =\ [}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00007}00007\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'LOGIN'},\ \textcolor{stringliteral}{'Login'}),}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00008}00008\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'LOGOUT'},\ \textcolor{stringliteral}{'Logout'}),}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00009}00009\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'CREATE\_THREAD'},\ \textcolor{stringliteral}{'Create\ Thread'}),}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00010}00010\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'CREATE\_POST'},\ \textcolor{stringliteral}{'Create\ Post'}),}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00012}00012\ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00014}\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_aae042ea12419dc254502a535cbd0c69e}{00014}}\ \ \ \ \ user\ =\ models.ForeignKey(settings.AUTH\_USER\_MODEL,\ on\_delete=models.CASCADE,\ related\_name=\textcolor{stringliteral}{'anime\_log\_entries'})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00015}\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_ab4890c0cdeebc0623b1fd7c98346c065}{00015}}\ \ \ \ \ action\ =\ models.CharField(max\_length=50,\ choices=ACTION\_CHOICES)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00016}\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a54087ecbb9ee7602390e48711f9590ff}{00016}}\ \ \ \ \ timestamp\ =\ models.DateTimeField(auto\_now\_add=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00017}\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a75a111b95a5c3139e052ddc85b7646d5}{00017}}\ \ \ \ \ details\ =\ models.TextField(blank=\textcolor{keyword}{True},\ null=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00020}\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a92532202a42ddece98d371b05feb82b8}{00020}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_log_entry_a92532202a42ddece98d371b05feb82b8}{\_\_str\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ f\textcolor{stringliteral}{"{}\{self.user.username\}\ -\/\ \{self.action\}\ at\ \{self.timestamp\}"{}}}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00023}\mbox{\hyperlink{classanime__forum_1_1models_1_1_user}{00023}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_user}{User}}(AbstractUser):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00024}\mbox{\hyperlink{classanime__forum_1_1models_1_1_user_af9acbbfa67a78fab10e96d5c8d94ffef}{00024}}\ \ \ \ \ profile\_picture\ =\ models.ImageField(upload\_to=\textcolor{stringliteral}{'profile\_pictures/'},\ null=\textcolor{keyword}{True},\ blank=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00025}\mbox{\hyperlink{classanime__forum_1_1models_1_1_user_a4dc8c6c40dc3a6a2933ceb79f978694e}{00025}}\ \ \ \ \ bio\ =\ models.TextField(null=\textcolor{keyword}{True},\ blank=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00026}\mbox{\hyperlink{classanime__forum_1_1models_1_1_user_a901510a35f9f4172f015583beb2cec17}{00026}}\ \ \ \ \ ROLE\_CHOICES\ =\ [}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00027}00027\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'admin'},\ \textcolor{stringliteral}{'Admin'}),}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00028}00028\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'moderator'},\ \textcolor{stringliteral}{'Moderator'}),}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00029}00029\ \ \ \ \ \ \ \ \ (\textcolor{stringliteral}{'user'},\ \textcolor{stringliteral}{'User'}),}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00030}00030\ \ \ \ \ ]}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00031}\mbox{\hyperlink{classanime__forum_1_1models_1_1_user_a329cef9c1d7ea1963fd529022f11c9bb}{00031}}\ \ \ \ \ role\ =\ models.CharField(max\_length=10,\ choices=ROLE\_CHOICES,\ default=\textcolor{stringliteral}{'user'})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00034}\mbox{\hyperlink{classanime__forum_1_1models_1_1_category}{00034}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_category}{Category}}(models.Model):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00035}\mbox{\hyperlink{classanime__forum_1_1models_1_1_category_ac742f0c7f5b7de423d84d63cbe216306}{00035}}\ \ \ \ \ category\_name\ =\ models.CharField(max\_length=100)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00036}\mbox{\hyperlink{classanime__forum_1_1models_1_1_category_a317881f12a62b3f3aa89a513955c68b2}{00036}}\ \ \ \ \ description\ =\ models.TextField(null=\textcolor{keyword}{True},\ blank=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00038}\mbox{\hyperlink{classanime__forum_1_1models_1_1_category_ac556e3fc1b3a7cd3530869e6004f2b78}{00038}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_category_ac556e3fc1b3a7cd3530869e6004f2b78}{\_\_str\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{classanime__forum_1_1models_1_1_category_ac742f0c7f5b7de423d84d63cbe216306}{category\_name}}}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00041}\mbox{\hyperlink{classanime__forum_1_1models_1_1_thread}{00041}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_thread}{Thread}}(models.Model):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00042}\mbox{\hyperlink{classanime__forum_1_1models_1_1_thread_abf5347806f6c0319480b09891817864c}{00042}}\ \ \ \ \ category\ =\ models.ForeignKey(Category,\ on\_delete=models.CASCADE)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00043}\mbox{\hyperlink{classanime__forum_1_1models_1_1_thread_a75f88cc744dc3b7bbd3536bd09916b3b}{00043}}\ \ \ \ \ user\ =\ models.ForeignKey(User,\ on\_delete=models.CASCADE)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00044}\mbox{\hyperlink{classanime__forum_1_1models_1_1_thread_afc9f6ffb40940ad9dbce5f6a05867c82}{00044}}\ \ \ \ \ title\ =\ models.CharField(max\_length=255)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00045}\mbox{\hyperlink{classanime__forum_1_1models_1_1_thread_a5310f0687df1d3ff19cfc4604c9b2c47}{00045}}\ \ \ \ \ content\ =\ models.TextField()}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00046}\mbox{\hyperlink{classanime__forum_1_1models_1_1_thread_a6954315ac38a84b55a1bb8f7f5196980}{00046}}\ \ \ \ \ created\_at\ =\ models.DateTimeField(auto\_now\_add=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00048}\mbox{\hyperlink{classanime__forum_1_1models_1_1_thread_a2e74cc6f8f1a5d7a2aff061ce8168cae}{00048}}\ \ \ \ \ \textcolor{keyword}{def\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_thread_a2e74cc6f8f1a5d7a2aff061ce8168cae}{\_\_str\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00049}00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ self.\mbox{\hyperlink{classanime__forum_1_1models_1_1_thread_afc9f6ffb40940ad9dbce5f6a05867c82}{title}}}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00051}\mbox{\hyperlink{classanime__forum_1_1models_1_1_post}{00051}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_post}{Post}}(models.Model):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00052}\mbox{\hyperlink{classanime__forum_1_1models_1_1_post_a08b9ba0316879addce04e5f3c152a23a}{00052}}\ \ \ \ \ thread\ =\ models.ForeignKey(Thread,\ on\_delete=models.CASCADE)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00053}\mbox{\hyperlink{classanime__forum_1_1models_1_1_post_aeff65edb0f61f461492e5214dec39084}{00053}}\ \ \ \ \ user\ =\ models.ForeignKey(User,\ on\_delete=models.CASCADE)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00054}\mbox{\hyperlink{classanime__forum_1_1models_1_1_post_a5213f777f2726224d54d2346ed0666bc}{00054}}\ \ \ \ \ content\ =\ models.TextField()}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00055}\mbox{\hyperlink{classanime__forum_1_1models_1_1_post_aa6dbe35ec1a12949c3650676dd6e090b}{00055}}\ \ \ \ \ created\_at\ =\ models.DateTimeField(auto\_now\_add=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00057}\mbox{\hyperlink{classanime__forum_1_1models_1_1_like}{00057}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_like}{Like}}(models.Model):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00058}\mbox{\hyperlink{classanime__forum_1_1models_1_1_like_a4c60a1539b79ee63d5d77a31b29b4cba}{00058}}\ \ \ \ \ post\ =\ models.ForeignKey(Post,\ on\_delete=models.CASCADE)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00059}\mbox{\hyperlink{classanime__forum_1_1models_1_1_like_a1d472cc1d9dba77edf93c00f429c5315}{00059}}\ \ \ \ \ user\ =\ models.ForeignKey(User,\ on\_delete=models.CASCADE)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00061}\mbox{\hyperlink{classanime__forum_1_1models_1_1_private_message}{00061}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_private_message}{PrivateMessage}}(models.Model):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00062}\mbox{\hyperlink{classanime__forum_1_1models_1_1_private_message_a1bd4e6b1e186e82525c53f595973ac12}{00062}}\ \ \ \ \ sender\ =\ models.ForeignKey(User,\ related\_name=\textcolor{stringliteral}{'sent\_messages'},\ on\_delete=models.CASCADE)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00063}\mbox{\hyperlink{classanime__forum_1_1models_1_1_private_message_ad086f35df85228aa5c93aade9dcc5c0d}{00063}}\ \ \ \ \ receiver\ =\ models.ForeignKey(User,\ related\_name=\textcolor{stringliteral}{'received\_messages'},\ on\_delete=models.CASCADE)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00064}\mbox{\hyperlink{classanime__forum_1_1models_1_1_private_message_a60a0a43d9bf51f4250a61bac0beacd68}{00064}}\ \ \ \ \ content\ =\ models.TextField()}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00065}\mbox{\hyperlink{classanime__forum_1_1models_1_1_private_message_a5824eb208197d2a45cdc0a6883ee8e08}{00065}}\ \ \ \ \ sent\_at\ =\ models.DateTimeField(auto\_now\_add=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00067}\mbox{\hyperlink{classanime__forum_1_1models_1_1_comment}{00067}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classanime__forum_1_1models_1_1_comment}{Comment}}(models.Model):}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00068}\mbox{\hyperlink{classanime__forum_1_1models_1_1_comment_a829733ec3de468036e55e20a6d56a5c2}{00068}}\ \ \ \ \ post\ =\ models.ForeignKey(Post,\ on\_delete=models.CASCADE)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00069}\mbox{\hyperlink{classanime__forum_1_1models_1_1_comment_ad12e608f3e6e52842a48ee7ef68b0470}{00069}}\ \ \ \ \ user\ =\ models.ForeignKey(User,\ on\_delete=models.CASCADE)}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00070}\mbox{\hyperlink{classanime__forum_1_1models_1_1_comment_af6a5c294b1eee136400375669e8d5faa}{00070}}\ \ \ \ \ content\ =\ models.TextField()}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00071}\mbox{\hyperlink{classanime__forum_1_1models_1_1_comment_a170a20e3d849ce294afb79b062b5e883}{00071}}\ \ \ \ \ created\_at\ =\ models.DateTimeField(auto\_now\_add=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{models_8py_source_l00072}00072\ }
+
+\end{DoxyCode}
